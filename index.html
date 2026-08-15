@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <!-- Fixed Logo -->
+  <a href="#" class="logo-fixed">Dev<span>.Portfolio</span></a>
+
+  <!-- Desktop Side Navigation -->
+  <nav class="desktop-nav">
+    <ul>
+      <li>
+        <a href="#home" class="nav-item active"><span class="dot"></span>Home</a>
+      </li>
+      <li class="has-sub">
+        <a href="#unity" class="nav-item"><span class="dot"></span>Unity</a>
+        <ul class="sub-nav">
+          <li><a href="#unity-1" class="sub-nav-item">Fantasy RPG</a></li>
+        </ul>
+      </li>
+      <li class="has-sub">
+        <a href="#flutter" class="nav-item"><span class="dot"></span>Flutter</a>
+        <ul class="sub-nav">
+          <li><a href="#flutter-1" class="sub-nav-item">Smart Home</a></li>
+          <li><a href="#flutter-2" class="sub-nav-item">Dashboard</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#contact" class="nav-item"><span class="dot"></span>Contact</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Mobile Floating Bottom Navigation -->
+  <nav class="mobile-nav">
+    <ul>
+      <li>
+        <a href="#home" class="nav-item active" title="Home">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </a>
+      </li>
+      <li class="has-sub">
+        <a href="#unity" class="nav-item" title="Unity">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"></line><line x1="8" y1="10" x2="8" y2="14"></line><line x1="15" y1="13" x2="15.01" y2="13"></line><line x1="18" y1="11" x2="18.01" y2="11"></line><path d="M22 13v-2c0-3.3-2.7-6-6-6H8c-3.3 0-6 2.7-6 6v2c0 2.2 1.8 4 4 4h1.4c.5 0 .9-.4.9-.9V15c0-1.1.9-2 2-2h3.4c1.1 0 2 .9 2 2v1.1c0 .5.4.9.9.9H18c2.2 0 4-1.8 4-4Z"></path></svg>
+        </a>
+        <ul class="sub-nav">
+          <li><a href="#unity-1" class="sub-nav-item">Fantasy RPG</a></li>
+        </ul>
+      </li>
+      <li class="has-sub">
+        <a href="#flutter" class="nav-item" title="Flutter">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+        </a>
+        <ul class="sub-nav">
+          <li><a href="#flutter-1" class="sub-nav-item">Smart Home</a></li>
+          <li><a href="#flutter-2" class="sub-nav-item">Dashboard</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#contact" class="nav-item" title="Contact">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <h1 class="gradient-text">Creative<br>Developer</h1>
+        <p>I build immersive digital experiences with clean code and beautiful design.</p>
+        <div class="hero-buttons">
+          <a href="#unity" class="btn primary-btn">View Unity</a>
+          <a href="#flutter" class="btn secondary-btn">View Flutter</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+      </div>
+    </section>
+
+    <!-- Unity Projects Section -->
+    <section id="unity" class="projects">
+      <h2>Unity Projects</h2>
+      
+      <div class="projects-grid">
+        <div class="project-card" id="unity-1">
+          <div class="project-image">
+            <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Unity RPG Game">
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag">Unity</span>
+              <span class="tag">C#</span>
+              <span class="tag">HLSL</span>
+            </div>
+            <h3>Fantasy RPG Adventure</h3>
+            <p>A 3D role-playing game developed in Unity, featuring a custom inventory system, dynamic lighting shaders, and advanced enemy AI behavior trees.</p>
+          </div>
+          
+          <!-- Expanding Detail Section -->
+          <div class="project-detail-wrapper">
+            <div class="project-detail-inner">
+              <div class="detail-content">
+                <div class="detail-header">
+                  <div class="detail-meta">
+                    <p><strong>Duration:</strong> 2023.01 - 2023.08 (8 Months)</p>
+                    <p><strong>Role:</strong> Lead Client Developer</p>
+                  </div>
+                  <div class="detail-links">
+                    <a href="#" class="btn outline-btn" onclick="event.stopPropagation()">GitHub Repo</a>
+                  </div>
+                </div>
+                
+                <div class="detail-body">
+                  <div class="detail-section">
+                    <h4>🛠 Tech Stack</h4>
+                    <div class="tech-tags">
+                      <span class="tag">Unity 2022</span> <span class="tag">C#</span> <span class="tag">HLSL</span> <span class="tag">Photon</span>
+                    </div>
+                  </div>
+                  
+                  <div class="detail-section">
+                    <h4>🎯 Key Achievements</h4>
+                    <ul>
+                      <li>Designing a scalable state-machine for boss encounters.</li>
+                      <li>Writing custom HLSL shaders to run at 60 FPS on mobile.</li>
+                    </ul>
+                  </div>
+
+                  <div class="detail-section">
+                    <h4>🔥 Challenge & Solution</h4>
+                    <p><strong>Problem:</strong> Memory leaks and GC spikes during long play sessions due to frequent object instantiation.</p>
+                    <p><strong>Solution:</strong> Implemented a robust Object Pooling system, reducing GC allocation by 90% and stabilizing the framerate.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Flutter Projects Section -->
+    <section id="flutter" class="projects">
+      <h2>Flutter Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card" id="flutter-1">
+          <div class="project-image">
+            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Flutter Smart Home">
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag">Flutter</span>
+              <span class="tag">Dart</span>
+              <span class="tag">Firebase</span>
+            </div>
+            <h3>Smart Home Hub</h3>
+            <p>A cross-platform mobile application for IoT home automation providing real-time device control and websocket integration.</p>
+          </div>
+
+          <!-- Expanding Detail Section -->
+          <div class="project-detail-wrapper">
+            <div class="project-detail-inner">
+              <div class="detail-content">
+                <div class="detail-header">
+                  <div class="detail-meta">
+                    <p><strong>Duration:</strong> 2023.09 - 2023.12 (4 Months)</p>
+                    <p><strong>Role:</strong> Frontend Architect</p>
+                  </div>
+                  <div class="detail-links">
+                    <a href="#" class="btn outline-btn" onclick="event.stopPropagation()">GitHub Repo</a>
+                  </div>
+                </div>
+                
+                <div class="detail-body">
+                  <div class="detail-section">
+                    <h4>🛠 Tech Stack</h4>
+                    <div class="tech-tags">
+                      <span class="tag">Flutter</span> <span class="tag">Dart</span> <span class="tag">Provider</span> <span class="tag">WebSockets</span>
+                    </div>
+                  </div>
+                  
+                  <div class="detail-section">
+                    <h4>🎯 Key Achievements</h4>
+                    <ul>
+                      <li>Consolidated various IoT protocols into one unified dashboard UI.</li>
+                      <li>Designed a custom, smooth drag-and-drop interface for organizing rooms.</li>
+                    </ul>
+                  </div>
+
+                  <div class="detail-section">
+                    <h4>🔥 Challenge & Solution</h4>
+                    <p><strong>Problem:</strong> Noticeable UI lag when receiving high-frequency WebSocket updates from multiple IoT devices simultaneously.</p>
+                    <p><strong>Solution:</strong> Debounced incoming socket streams and isolated state updates using granular Provider selectors to prevent unnecessary widget rebuilds.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" id="flutter-2">
+          <div class="project-image">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Flutter Dashboard">
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag">Flutter Web</span>
+              <span class="tag">REST API</span>
+            </div>
+            <h3>Analytics Dashboard</h3>
+            <p>A responsive web dashboard built entirely in Flutter Web, featuring interactive charts, complex data tables, and dark mode support.</p>
+          </div>
+
+          <!-- Expanding Detail Section -->
+          <div class="project-detail-wrapper">
+            <div class="project-detail-inner">
+              <div class="pending-spinner">
+                <div class="spinner"></div>
+              </div>
+              <div class="detail-content">
+                <div class="detail-header">
+                  <div class="detail-meta">
+                    <p><strong>Duration:</strong> 2024.01 - Present</p>
+                    <p><strong>Role:</strong> Full-stack Developer</p>
+                  </div>
+                  <div class="detail-links">
+                    <a href="#" class="btn outline-btn" onclick="event.stopPropagation()">GitHub Repo</a>
+                  </div>
+                </div>
+                
+                <div class="detail-body">
+                  <div class="detail-section">
+                    <h4>🛠 Tech Stack</h4>
+                    <div class="tech-tags">
+                      <span class="tag">Flutter Web</span> <span class="tag">REST API</span> <span class="tag">Node.js</span> <span class="tag">PostgreSQL</span>
+                    </div>
+                  </div>
+                  
+                  <div class="detail-section">
+                    <h4>🎯 Key Achievements</h4>
+                    <ul>
+                      <li>Implemented custom SVG charting libraries for high-performance rendering.</li>
+                      <li>Created a complex data grid supporting multi-column sorting, filtering, and pagination.</li>
+                    </ul>
+                  </div>
+
+                  <div class="detail-section">
+                    <h4>🔥 Challenge & Solution</h4>
+                    <p><strong>Problem:</strong> Initial load time for the Flutter Web application was exceeding 6 seconds on 3G networks.</p>
+                    <p><strong>Solution:</strong> Optimized the web build by implementing deferred loading for heavy charting libraries and stripping unused fonts, reducing the payload size by 45%.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+      <div class="contact-container glass scroll-target">
+        <h2>Let's Work Together</h2>
+        <p>I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
+        <a href="mailto:hello@example.com" class="btn btn-primary contact-btn">Say Hello</a>
+        <div class="social-links">
+          <a href="#" class="social-icon">GH</a>
+          <a href="#" class="social-icon">IN</a>
+          <a href="#" class="social-icon">TW</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
