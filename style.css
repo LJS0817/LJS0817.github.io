@@ -125,8 +125,8 @@ h2 {
 
 .detail-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  justify-content: flex-start;
+  align-items: center;
   border-bottom: 1px solid rgba(255,255,255,0.1);
   padding-bottom: 1.5rem;
   margin-bottom: 1.5rem;
@@ -139,21 +139,38 @@ h2 {
   color: #cbd5e1;
 }
 
+.detail-meta p:last-child {
+  margin-bottom: 0;
+}
+
 .detail-meta p strong {
   color: var(--text-color);
   margin-right: 0.5rem;
 }
 
+.detail-links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
 .outline-btn {
-  background: transparent;
-  border: 1px solid var(--primary-color);
+  background: rgba(59, 130, 246, 0.1);
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
   color: var(--primary-color);
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .outline-btn:hover {
-  background: rgba(59, 130, 246, 0.1);
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .detail-section {
@@ -518,6 +535,187 @@ section {
   width: 100%;
 }
 
+/* --- About Me Section --- */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.about-bio {
+  background-color: var(--glass-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.about-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .about-details {
+    grid-template-columns: 1fr;
+  }
+}
+
+.about-skills, .about-timeline {
+  background-color: var(--glass-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+}
+
+.about-skills h3, .about-timeline h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 0.5rem;
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.skill-badge {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  transition: transform 0.3s ease, background 0.3s ease;
+  cursor: default;
+}
+
+.skill-badge:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.skills-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  font-size: 0.85rem;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.legend-item::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* Category Colors */
+.skill-badge.lang {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.5);
+  color: #60a5fa;
+}
+.legend-item.lang::before { background: #60a5fa; }
+.skill-badge.lang:hover { background: rgba(59, 130, 246, 0.35); }
+
+.skill-badge.tool {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #fbbf24;
+}
+.legend-item.tool::before { background: #fbbf24; }
+.skill-badge.tool:hover { background: rgba(245, 158, 11, 0.35); }
+
+.skill-badge.graphic {
+  background: rgba(236, 72, 153, 0.2);
+  border-color: rgba(236, 72, 153, 0.5);
+  color: #f472b6;
+}
+.legend-item.graphic::before { background: #f472b6; }
+.skill-badge.graphic:hover { background: rgba(236, 72, 153, 0.35); }
+
+.skill-badge.sound {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.5);
+  color: #34d399;
+}
+.legend-item.sound::before { background: #34d399; }
+.skill-badge.sound:hover { background: rgba(16, 185, 129, 0.35); }
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  padding-left: 24px;
+  border-left: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -32px;
+  top: 0.3rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  border: 2px solid var(--bg-color);
+}
+
+.timeline-date {
+  font-size: 0.85rem;
+  color: var(--accent-color);
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.timeline-text h4 {
+  margin: 0 0 0.3rem 0;
+  font-size: 1.1rem;
+}
+
+.timeline-text p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.awards-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.awards-list li {
+  margin-bottom: 0.5rem;
+}
+
 .projects-grid {
   display: flex;
   flex-direction: column;
@@ -548,13 +746,13 @@ section {
   width: 100%;
   height: 350px;
   overflow: hidden;
+  background-color: rgba(15, 23, 42, 0.5); /* subtle dark background for contain */
 }
 
 .project-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .project-info {
@@ -571,14 +769,33 @@ section {
 
 .project-info p {
   font-size: 1.1rem;
-  margin-bottom: 1.5rem;
-  flex: 1;
+  margin-bottom: 0;
 }
 
 .project-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.project-gallery img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
+}
+
+.project-gallery img:hover {
+  transform: scale(1.02);
 }
 
 .tag {
@@ -588,6 +805,18 @@ section {
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 500;
+}
+
+.ai-tag.no-ai {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+}
+
+.ai-tag.used-ai {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
 }
 
 /* Contact Section */

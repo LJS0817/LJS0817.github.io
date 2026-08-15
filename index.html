@@ -13,14 +13,14 @@
 </head>
 
 <body>
-
-
-
   <!-- Desktop Side Navigation -->
   <nav class="desktop-nav">
     <ul>
       <li>
         <a href="#home" class="nav-item active"><span class="dot"></span>Home</a>
+      </li>
+      <li>
+        <a href="#about" class="nav-item"><span class="dot"></span>About</a>
       </li>
       <li class="has-sub">
         <a href="#unity" class="nav-item"><span class="dot"></span>Unity</a>
@@ -31,8 +31,16 @@
       <li class="has-sub">
         <a href="#flutter" class="nav-item"><span class="dot"></span>Flutter</a>
         <ul class="sub-nav">
-          <li><a href="#flutter-1" class="sub-nav-item">Smart Home</a></li>
-          <li><a href="#flutter-2" class="sub-nav-item">Dashboard</a></li>
+          <li><a href="#flutter-1" class="sub-nav-item">Card Tracker</a></li>
+          <li><a href="#flutter-2" class="sub-nav-item">Weather App</a></li>
+          <li><a href="#flutter-3" class="sub-nav-item">NowPlaying</a></li>
+          <li><a href="#flutter-4" class="sub-nav-item">Soap Calculator</a></li>
+        </ul>
+      </li>
+      <li class="has-sub">
+        <a href="#web" class="nav-item"><span class="dot"></span>Web</a>
+        <ul class="sub-nav">
+          <li><a href="#web-1" class="sub-nav-item">Checklist App</a></li>
         </ul>
       </li>
       <li>
@@ -50,6 +58,14 @@
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
             <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+        </a>
+      </li>
+      <li>
+        <a href="#about" class="nav-item" title="About">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="5" />
+            <path d="M20 21a8 8 0 0 0-16 0" />
           </svg>
         </a>
       </li>
@@ -79,8 +95,23 @@
           </svg>
         </a>
         <ul class="sub-nav">
-          <li><a href="#flutter-1" class="sub-nav-item">Smart Home</a></li>
-          <li><a href="#flutter-2" class="sub-nav-item">Dashboard</a></li>
+          <li><a href="#flutter-1" class="sub-nav-item">Card Tracker</a></li>
+          <li><a href="#flutter-2" class="sub-nav-item">Weather App</a></li>
+          <li><a href="#flutter-3" class="sub-nav-item">NowPlaying</a></li>
+          <li><a href="#flutter-4" class="sub-nav-item">Soap Calculator</a></li>
+        </ul>
+      </li>
+      <li class="has-sub">
+        <a href="#web" class="nav-item" title="Web">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </a>
+        <ul class="sub-nav">
+          <li><a href="#web-1" class="sub-nav-item">Checklist App</a></li>
         </ul>
       </li>
       <li>
@@ -112,6 +143,88 @@
       </div>
     </section>
 
+    <!-- About Section -->
+    <section id="about" class="projects">
+      <h2>About Me</h2>
+      <div class="about-content">
+        <div class="about-bio">
+          <p>문제 해결을 즐기고 사용자 경험을 중요시하는 프론트엔드 및 모바일 개발자입니다. 다방면의 언어와 프레임워크를 경험하며, 사용자에게 가치 있는 서비스를 제공하기 위해 끊임없이 성장하고 있습니다.</p>
+        </div>
+        
+        <div class="about-details">
+          <!-- Skills -->
+          <div class="about-skills">
+            <h3>Tech Stack & Tools</h3>
+            <div class="skills-grid">
+              <!-- Language -->
+              <span class="skill-badge lang">Dart</span>
+              <span class="skill-badge lang">Java</span>
+              <span class="skill-badge lang">Python</span>
+              <span class="skill-badge lang">C</span>
+              <span class="skill-badge lang">C#</span>
+              <span class="skill-badge lang">HTML/CSS</span>
+              <span class="skill-badge lang">JavaScript</span>
+              
+              <!-- Tool / Framework -->
+              <span class="skill-badge tool">Flutter</span>
+              <span class="skill-badge tool">Node.js</span>
+              <span class="skill-badge tool">EJS</span>
+              <span class="skill-badge tool">Unity</span>
+              <span class="skill-badge tool">Android Studio</span>
+              
+              <!-- Graphic -->
+              <span class="skill-badge graphic">Figma</span>
+              <span class="skill-badge graphic">Blender</span>
+              <span class="skill-badge graphic">Photoshop CS6</span>
+              
+              <!-- Sound -->
+              <span class="skill-badge sound">Goldwave</span>
+            </div>
+            <div class="skills-legend">
+              <span class="legend-item lang">Language</span>
+              <span class="legend-item tool">Tool / Framework</span>
+              <span class="legend-item graphic">Graphic</span>
+              <span class="legend-item sound">Sound</span>
+            </div>
+          </div>
+
+          <!-- Timeline (Education & Awards) -->
+          <div class="about-timeline">
+            <h3>Education & Awards</h3>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2017 ~ 2020</div>
+                <div class="timeline-text">
+                  <h4>한국게임과학고등학교</h4>
+                  <p>게임개발학과</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2021 ~ 2026</div>
+                <div class="timeline-text">
+                  <h4>가천대학교</h4>
+                  <p>컴퓨터공학과</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Awards</div>
+                <div class="timeline-text">
+                  <ul class="awards-list">
+                    <li>🏆 스마틴앱챌린지 우수상</li>
+                    <li>🏆 전북 기능성게임 제작대회 우수상</li>
+                    <li>🏆 가천대 P-학기 프로젝트 우수상</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Unity Projects Section -->
     <section id="unity" class="projects">
       <h2>Unity Projects</h2>
@@ -120,18 +233,18 @@
         <div class="project-card" id="unity-1">
           <div class="project-image">
             <img
-              src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-              alt="Unity RPG Game">
+              src="./src/Mine.png"
+              alt="Mine Game">
           </div>
           <div class="project-info">
             <div class="project-tags">
+              <span class="tag ai-tag no-ai">AI 미사용</span>
               <span class="tag">Unity</span>
-              <span class="tag">C#</span>
-              <span class="tag">HLSL</span>
+              <span class="tag">Tilemap</span>
+              <span class="tag">GoldWave</span>
             </div>
-            <h3>Fantasy RPG Adventure</h3>
-            <p>A 3D role-playing game developed in Unity, featuring a custom inventory system, dynamic lighting shaders,
-              and advanced enemy AI behavior trees.</p>
+            <h3>Mine</h3>
+            <p>픽셀 아트 컨셉의 스펠렁키 모티브 게임. 함정과 몬스터를 피하고 로프를 활용해 동굴을 탈출하는 어드벤처 2D 게임입니다.</p>
           </div>
 
           <!-- Expanding Detail Section -->
@@ -140,11 +253,12 @@
               <div class="detail-content">
                 <div class="detail-header">
                   <div class="detail-meta">
-                    <p><strong>Duration:</strong> 2023.01 - 2023.08 (8 Months)</p>
-                    <p><strong>Role:</strong> Lead Client Developer</p>
+                    <p><strong>Duration:</strong> 2019.05 - 2019.07 (3 Months)</p>
+                    <p><strong>Role:</strong> Programmer</p>
+                    <p><strong>Team:</strong> 3인 팀 (Art 1, 맵 제작 1, 프로그래밍 1)</p>
                   </div>
                   <div class="detail-links">
-                    <a href="#" class="btn outline-btn" onclick="event.stopPropagation()">GitHub Repo</a>
+                    <a href="https://github.com/LJS0817/Project_0" target="_blank" class="btn outline-btn" onclick="event.stopPropagation()">GitHub Repo</a>
                   </div>
                 </div>
 
@@ -152,25 +266,35 @@
                   <div class="detail-section">
                     <h4>🛠 Tech Stack</h4>
                     <div class="tech-tags">
-                      <span class="tag">Unity 2022</span> <span class="tag">C#</span> <span class="tag">HLSL</span>
-                      <span class="tag">Photon</span>
+                      <span class="tag">Unity</span> <span class="tag">C#</span> <span class="tag">GoldWave</span>
+                      <span class="tag">Particle System</span> <span class="tag">Joint</span> <span class="tag">Tilemap</span> <span class="tag">2D Lighting</span>
                     </div>
                   </div>
 
                   <div class="detail-section">
-                    <h4>🎯 Key Achievements</h4>
+                    <h4>🎯 주요 특징 (Key Highlights)</h4>
                     <ul>
-                      <li>Designing a scalable state-machine for boss encounters.</li>
-                      <li>Writing custom HLSL shaders to run at 60 FPS on mobile.</li>
+                      <li>스펠렁키를 모티브로 한 타일맵 기반의 동굴 탐험 레벨 디자인</li>
+                      <li>생존 요소(HP, 산소, 횃불, 음식)를 수시로 관리해야 하는 긴장감 있는 게임 플레이</li>
+                      <li>로프(Joint 활용)와 몬스터, 함정 등 다양한 상호작용 기믹 구현</li>
+                      <li>인터넷 사운드 소스를 GoldWave로 직접 편집하여 게임 내 적용</li>
                     </ul>
                   </div>
 
                   <div class="detail-section">
-                    <h4>🔥 Challenge & Solution</h4>
-                    <p><strong>Problem:</strong> Memory leaks and GC spikes during long play sessions due to frequent
-                      object instantiation.</p>
-                    <p><strong>Solution:</strong> Implemented a robust Object Pooling system, reducing GC allocation by
-                      90% and stabilizing the framerate.</p>
+                    <h4>🔥 Challenge & Solution (Collaboration)</h4>
+                    <p><strong>Problem:</strong> 개발 초기, 아트 담당자가 전달해 준 픽셀 이미지들의 캔버스 사이즈와 피벗(Pivot) 기준점이 일정하지 않아 타일맵 조립과 캐릭터 애니메이션 적용에 어긋남이 발생했습니다. 초기에는 급한 대로 제가 직접 포토샵(Photoshop CS6)을 켜서 이미지 규격을 하나하나 정규화(Normalize)하여 유니티에 적용하는 수고를 감수해야만 했습니다.</p>
+                    <p><strong>Solution:</strong> 반복적인 작업으로 인한 시간 손실을 막기 위해 근본적인 해결에 나섰습니다. 아트 담당자에게 유니티 에디터 상에서 에셋 규격 통일이 왜 중요한지 문제를 공유하고, 포토샵에서 캔버스 사이즈를 규격화하여 피벗을 맞추어 추출하는 방법을 직접 가이드해 주었습니다. 이후 리소스가 일관된 규격으로 전달되면서 불필요한 반복 작업이 사라졌고, 팀 전체의 개발 속도와 협업 효율이 크게 향상되었습니다.</p>
+                  </div>
+
+                  <div class="detail-section">
+                    <h4>📸 Screenshots</h4>
+                    <div class="project-gallery">
+                      <img src="./src/Mine_1.png" alt="Mine Screenshot 1">
+                      <img src="./src/Mine_2.png" alt="Mine Screenshot 2">
+                      <img src="./src/Mine_3.png" alt="Mine Screenshot 3">
+                      <img src="./src/Mine_4.png" alt="Mine Screenshot 4">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -187,18 +311,19 @@
         <div class="project-card" id="flutter-1">
           <div class="project-image">
             <img
-              src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-              alt="Flutter Smart Home">
+              src="./src/Card.png"
+              alt="Card Tracker App">
           </div>
           <div class="project-info">
             <div class="project-tags">
+              <span class="tag ai-tag no-ai">AI 미사용</span>
               <span class="tag">Flutter</span>
-              <span class="tag">Dart</span>
-              <span class="tag">Firebase</span>
+              <span class="tag">Provider</span>
+              <span class="tag">sqflite</span>
+              <span class="tag">flutter_animate</span>
             </div>
-            <h3>Smart Home Hub</h3>
-            <p>A cross-platform mobile application for IoT home automation providing real-time device control and
-              websocket integration.</p>
+            <h3>Card Usage Tracker</h3>
+            <p>A personal finance application to record and track credit card usage history, featuring smooth animations and a robust local SQLite database.</p>
           </div>
 
           <!-- Expanding Detail Section -->
@@ -207,11 +332,13 @@
               <div class="detail-content">
                 <div class="detail-header">
                   <div class="detail-meta">
-                    <p><strong>Duration:</strong> 2023.09 - 2023.12 (4 Months)</p>
-                    <p><strong>Role:</strong> Frontend Architect</p>
+                    <p><strong>Type:</strong> Personal App</p>
+                    <p><strong>Role:</strong> Solo Developer</p>
+                    <p><strong>Team:</strong> 1인 개발 (Solo)</p>
                   </div>
                   <div class="detail-links">
-                    <a href="#" class="btn outline-btn" onclick="event.stopPropagation()">GitHub Repo</a>
+                    <a href="https://www.figma.com/design/VHKiNzWC2pKVbziPUB3oBS/Untitled?node-id=0-1&t=x4cDlNAd13y5BhWy-1" target="_blank" class="btn outline-btn" onclick="event.stopPropagation()">Figma Design</a>
+                    <a href="https://github.com/LJS0817/untitled2" target="_blank" class="btn outline-btn" onclick="event.stopPropagation()">GitHub Repo</a>
                   </div>
                 </div>
 
@@ -220,24 +347,23 @@
                     <h4>🛠 Tech Stack</h4>
                     <div class="tech-tags">
                       <span class="tag">Flutter</span> <span class="tag">Dart</span> <span class="tag">Provider</span>
-                      <span class="tag">WebSockets</span>
+                      <span class="tag">sqflite</span> <span class="tag">flutter_animate</span>
                     </div>
                   </div>
 
                   <div class="detail-section">
-                    <h4>🎯 Key Achievements</h4>
+                    <h4>🎯 주요 특징 (Key Highlights)</h4>
                     <ul>
-                      <li>Consolidated various IoT protocols into one unified dashboard UI.</li>
-                      <li>Designed a custom, smooth drag-and-drop interface for organizing rooms.</li>
+                      <li>단순한 <code>shared_preferences</code> 대신 <code>sqflite</code>를 도입하여 관계형 데이터 관리와 쿼리 성능 최적화</li>
+                      <li><code>flutter_animate</code> 패키지를 활용한 직관적이고 부드러운 화면 전환(UI Transition) 구현</li>
+                      <li>오직 개인의 생산성 향상과 효율적인 지출 관리를 목적으로 기획부터 개발까지 1인 전담</li>
                     </ul>
                   </div>
 
                   <div class="detail-section">
                     <h4>🔥 Challenge & Solution</h4>
-                    <p><strong>Problem:</strong> Noticeable UI lag when receiving high-frequency WebSocket updates from
-                      multiple IoT devices simultaneously.</p>
-                    <p><strong>Solution:</strong> Debounced incoming socket streams and isolated state updates using
-                      granular Provider selectors to prevent unnecessary widget rebuilds.</p>
+                    <p><strong>Problem:</strong> 처음 <code>sqflite</code>를 적용할 때, <code>DatabaseMng</code> 클래스의 <code>init()</code>을 각 데이터 조회 함수마다 지연 초기화(Lazy Initialization) 방식으로 호출했습니다. 이로 인해 앱 구동 시 여러 위젯이 동시에 DB 접근을 시도하면서 <code>openDatabase</code>가 중복 실행되거나, 비동기 대기 중 <code>db</code> 객체가 Null 상태로 참조되어 에러가 발생할 수 있는 동시성(Race condition) 문제가 있었습니다.</p>
+                    <p><strong>Solution:</strong> 앱 구동 초기 단계(Splash 또는 최상단 Provider 주입 전)에서 <code>await init()</code>을 단 한 번만 확실하게 완료하도록 생명주기를 변경하여, 하위 위젯들이 안전하게 DB에 접근할 수 있도록 구조를 개선했습니다.</p>
                   </div>
                 </div>
               </div>
@@ -248,33 +374,34 @@
         <div class="project-card" id="flutter-2">
           <div class="project-image">
             <img
-              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-              alt="Flutter Dashboard">
+              src="./src/Weather.png"
+              alt="Weather App">
           </div>
           <div class="project-info">
             <div class="project-tags">
-              <span class="tag">Flutter Web</span>
-              <span class="tag">REST API</span>
+              <span class="tag ai-tag no-ai">AI 미사용</span>
+              <span class="tag">Flutter</span>
+              <span class="tag">Java Native</span>
+              <span class="tag">Open API</span>
             </div>
-            <h3>Analytics Dashboard</h3>
-            <p>A responsive web dashboard built entirely in Flutter Web, featuring interactive charts, complex data
-              tables, and dark mode support.</p>
+            <h3>Public Data Weather App</h3>
+            <p>공공데이터포털의 API를 연동하여 실시간 날씨 정보를 제공하는 앱으로, 애니메이션 패키지를 활용해 직관적인 UI를 구현했습니다.</p>
           </div>
 
           <!-- Expanding Detail Section -->
           <div class="project-detail-wrapper">
             <div class="project-detail-inner">
-              <div class="pending-spinner">
-                <div class="spinner"></div>
-              </div>
               <div class="detail-content">
                 <div class="detail-header">
                   <div class="detail-meta">
-                    <p><strong>Duration:</strong> 2024.01 - Present</p>
-                    <p><strong>Role:</strong> Full-stack Developer</p>
+                    <p><strong>Duration:</strong> 2023.10.30 - 2023.11.02 (4 Days)</p>
+                    <p><strong>Role:</strong> Solo Developer</p>
+                    <p><strong>Team:</strong> 1인 개발 (Solo)</p>
                   </div>
                   <div class="detail-links">
-                    <a href="#" class="btn outline-btn" onclick="event.stopPropagation()">GitHub Repo</a>
+                    <a href="https://lifetostring.tistory.com/2" target="_blank" class="btn outline-btn" onclick="event.stopPropagation()">Dev Blog</a>
+                    <a href="https://www.figma.com/design/m92yju7kgo33FD1nPtrc4D/myDesign?t=qnc5GWfOovZwFtCw-0" target="_blank" class="btn outline-btn" onclick="event.stopPropagation()">Figma Design</a>
+                    <a href="https://github.com/LJS0817/weather" target="_blank" class="btn outline-btn" onclick="event.stopPropagation()">GitHub Repo</a>
                   </div>
                 </div>
 
@@ -282,25 +409,208 @@
                   <div class="detail-section">
                     <h4>🛠 Tech Stack</h4>
                     <div class="tech-tags">
-                      <span class="tag">Flutter Web</span> <span class="tag">REST API</span> <span
-                        class="tag">Node.js</span> <span class="tag">PostgreSQL</span>
+                      <span class="tag">Flutter</span> <span class="tag">Wave</span> <span class="tag">xml2json</span> <span class="tag">wakelock_plus</span> <span class="tag">flutter_animate</span>
                     </div>
                   </div>
 
                   <div class="detail-section">
-                    <h4>🎯 Key Achievements</h4>
+                    <h4>🎯 주요 특징 (Key Highlights)</h4>
                     <ul>
-                      <li>Implemented custom SVG charting libraries for high-performance rendering.</li>
-                      <li>Created a complex data grid supporting multi-column sorting, filtering, and pagination.</li>
+                      <li>공공데이터포털의 날씨 API를 연동하여 실시간 기상 정보를 성공적으로 파싱 및 화면에 출력</li>
+                      <li><code>Wave</code>와 <code>flutter_animate</code>를 활용해 다이나믹하고 시각적으로 만족스러운 배경 효과 구현</li>
+                      <li>단 4일간의 짧은 기간 내에 API 신청, 기획, 개발을 진행했으며 중간에 과감한 재디자인을 통해 완성도 향상</li>
                     </ul>
                   </div>
 
                   <div class="detail-section">
                     <h4>🔥 Challenge & Solution</h4>
-                    <p><strong>Problem:</strong> Initial load time for the Flutter Web application was exceeding 6
-                      seconds on 3G networks.</p>
-                    <p><strong>Solution:</strong> Optimized the web build by implementing deferred loading for heavy
-                      charting libraries and stripping unused fonts, reducing the payload size by 45%.</p>
+                    <p><strong>Problem:</strong> 공공데이터포털 API의 복잡한 XML 응답 형식을 Flutter에서 파싱하고 다루는 데 큰 어려움을 겪었습니다.</p>
+                    <p><strong>Solution:</strong> 웹 서핑과 공식 문서를 끈질기게 탐독하여 <code>xml2json</code> 패키지를 찾아냈고, 이를 활용해 다루기 까다로운 XML 응답을 Dart에서 처리하기 쉬운 JSON 형태로 변환하는 파이프라인을 성공적으로 구축했습니다. 또한, 기존에 개발했던 투박한 UI에 아쉬움을 느껴 하루를 추가로 투자해 전체 레이아웃을 재디자인함으로써 최종적으로 훨씬 만족스러운 퀄리티의 앱을 완성했습니다.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project-card" id="flutter-3">
+          <div class="project-image">
+            <img
+              src="./src/NowPlaying.png"
+              alt="NowPlaying App">
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag ai-tag no-ai">AI 미사용</span>
+              <span class="tag">Flutter</span>
+              <span class="tag">Android Native</span>
+              <span class="tag">MethodChannel</span>
+            </div>
+            <h3>Desk Clock & NowPlaying</h3>
+            <p>탁상시계와 유튜브 뮤직 재생 컨트롤 기능을 결합한 유틸리티 앱으로, 네이티브 통신을 통한 실시간 미디어 연동을 지원합니다.</p>
+          </div>
+
+          <!-- Expanding Detail Section -->
+          <div class="project-detail-wrapper">
+            <div class="project-detail-inner">
+              <div class="detail-content">
+                <div class="detail-header">
+                  <div class="detail-meta">
+                    <p><strong>Duration:</strong> 2024.12.15 - 2024.12.20</p>
+                    <p><strong>Role:</strong> Solo Developer</p>
+                    <p><strong>Team:</strong> 1인 개발 (Solo)</p>
+                  </div>
+                  <div class="detail-links">
+                    <a href="https://lifetostring.tistory.com/21" target="_blank" class="btn outline-btn" onclick="event.stopPropagation()">Dev Blog</a>
+                    <a href="https://github.com/LJS0817/nowp" target="_blank" class="btn outline-btn" onclick="event.stopPropagation()">GitHub Repo</a>
+                  </div>
+                </div>
+
+                <div class="detail-body">
+                  <div class="detail-section">
+                    <h4>🛠 Tech Stack</h4>
+                    <div class="tech-tags">
+                      <span class="tag">Flutter</span> <span class="tag">Java</span> <span class="tag">Provider</span> <span class="tag">flutter_animate</span> <span class="tag">flutter_svg</span> <span class="tag">wakelock_plus</span>
+                    </div>
+                  </div>
+
+                  <div class="detail-section">
+                    <h4>🎯 주요 특징 (Key Highlights)</h4>
+                    <ul>
+                      <li>기존 패키지에 의존하지 않고 <code>MethodChannel</code>과 <code>EventChannel</code>을 직접 구축하여 네이티브(Java)와 Flutter 간 통신 구현</li>
+                      <li>안드로이드 스마트폰 알림(Notification)을 감지하여 YouTube Music의 앨범 커버 및 재생 곡 정보를 실시간으로 추출</li>
+                      <li>이전곡, 재생/일시정지, 다음곡 등 핵심 미디어 컨트롤 기능을 탁상시계 UI와 매끄럽게 통합</li>
+                    </ul>
+                  </div>
+
+                  <div class="detail-section">
+                    <h4>🔥 Challenge & Solution</h4>
+                    <p><strong>Problem:</strong> 수많은 Notification 데이터 더미 속에서 음악 재생에 필요한 핵심 메타데이터(곡명, 아티스트, 커버)만 정확히 식별해 가져오는 과정이 가장 큰 난관이었습니다.</p>
+                    <p><strong>Solution:</strong> 안드로이드 공식 문서와 커뮤니티를 깊이 탐구하며 <code>NotificationListenerService</code>의 구조를 파악했습니다. 필요한 Bundle 데이터만 선별적으로 파싱하여 <code>EventChannel</code> 스트림을 통해 Flutter로 스트리밍하는 안정적인 백그라운드 브릿지(Bridge) 로직을 완성해냈습니다.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project-card" id="flutter-4">
+          <div class="project-image">
+            <img
+              src="./src/Cal.png"
+              alt="Soap Calculator App">
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag ai-tag no-ai">AI 미사용</span>
+              <span class="tag">Flutter</span>
+              <span class="tag">Play Store</span>
+              <span class="tag">Utility</span>
+            </div>
+            <h3>Soap & Cosmetic Calculator</h3>
+            <p>비누 및 화장품 제작 시 필요한 복잡한 배합비와 수치들을 직관적으로 계산하고 관리해 주는 프로페셔널 계산기 앱입니다.</p>
+          </div>
+
+          <!-- Expanding Detail Section -->
+          <div class="project-detail-wrapper">
+            <div class="project-detail-inner">
+              <div class="detail-content">
+                <div class="detail-header">
+                  <div class="detail-meta">
+                    <p><strong>Duration:</strong> 2023.08.25 - 2023.10.05</p>
+                    <p><strong>Status:</strong> Published (Play Store)</p>
+                    <p><strong>Role:</strong> Solo Developer</p>
+                    <p><strong>Team:</strong> 1인 개발 (Solo)</p>
+                  </div>
+                  <div class="detail-links">
+                    <a href="https://play.google.com/store/apps/details?id=com.isma_soap_calculator.music" target="_blank" class="btn outline-btn" onclick="event.stopPropagation()">Google Play</a>
+                    <a href="https://www.figma.com/design/gcoiwsx8vGc4YKWHHSDWVy/Untitled--Copy-?node-id=0-1&t=M6sZk99IzMnl8r5h-1" target="_blank" class="btn outline-btn" onclick="event.stopPropagation()">Figma Design</a>
+                    <a href="https://github.com/LJS0817/myApp" target="_blank" class="btn outline-btn" onclick="event.stopPropagation()">GitHub Repo</a>
+                  </div>
+                </div>
+
+                <div class="detail-body">
+                  <div class="detail-section">
+                    <h4>🛠 Tech Stack</h4>
+                    <div class="tech-tags">
+                      <span class="tag">Flutter</span> <span class="tag">Provider</span> <span class="tag">permission_handler</span> <span class="tag">flutter_animate</span> <span class="tag">File I/O</span>
+                    </div>
+                  </div>
+
+                  <div class="detail-section">
+                    <h4>🎯 주요 특징 (Key Highlights)</h4>
+                    <ul>
+                      <li><strong>Google Play Store 공식 출시</strong> 및 실제 사용자 서비스 운영 경험 확보</li>
+                      <li>로컬 파일 입출력(File I/O) 방식을 활용하여 오프라인 환경에서도 레시피 데이터를 빠르고 안전하게 영구 저장</li>
+                      <li><code>permission_handler</code>를 통한 체계적인 파일 권한 관리 및 <code>flutter_animate</code>를 활용한 부드러운 상호작용(UX) 구현</li>
+                    </ul>
+                  </div>
+
+                  <div class="detail-section">
+                    <h4>🔥 Challenge & Solution</h4>
+                    <p><strong>Problem:</strong> 개발 초기 단계보다 앱의 기능과 규모가 점차 확장되면서 데이터 구조가 꼬이고(Tangling), 여러 위젯 간의 상태 관리가 복잡해져 심각한 스파게티 코드가 될 위험이 있었습니다.</p>
+                    <p><strong>Solution:</strong> 개발을 잠시 멈추고 <code>Provider</code>를 기반으로 데이터 처리 흐름과 전역 상태 관리 아키텍처를 근본부터 재설계했습니다. 비즈니스 로직과 UI를 완벽하게 분리하는 대대적인 리팩토링(Refactoring)을 진행하여, 데이터의 꼬임을 해결하고 향후 유지보수가 용이한 확장성 있는 구조로 완성했습니다.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Web Projects Section -->
+    <section id="web" class="projects">
+      <h2>Web Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card" id="web-1">
+          <div class="project-image">
+            <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Checklist App">
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag ai-tag used-ai">AI 사용</span>
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">Vanilla JS</span>
+            </div>
+            <h3>Static Checklist App</h3>
+            <p>A simple, highly optimized static checklist application for daily tasks. Features local storage persistence and a clean, minimalist UI.</p>
+          </div>
+          
+          <!-- Expanding Detail Section -->
+          <div class="project-detail-wrapper">
+            <div class="project-detail-inner">
+              <div class="detail-content">
+                <div class="detail-header">
+                  <div class="detail-meta">
+                    <p><strong>Duration:</strong> 2024.08 (1 Week)</p>
+                    <p><strong>Role:</strong> Frontend Developer</p>
+                    <p><strong>Team:</strong> 1인 개발 (Solo)</p>
+                  </div>
+                  <div class="detail-links">
+                    <a href="#" class="btn outline-btn" onclick="event.stopPropagation()">GitHub Repo</a>
+                  </div>
+                </div>
+                
+                <div class="detail-body">
+                  <div class="detail-section">
+                    <h4>🛠 Tech Stack</h4>
+                    <div class="tech-tags">
+                      <span class="tag">HTML5</span> <span class="tag">CSS3</span> <span class="tag">Vanilla JS</span>
+                    </div>
+                  </div>
+                  
+                  <div class="detail-section">
+                    <h4>🎯 주요 성과 (Key Achievements)</h4>
+                    <ul>
+                      <li>성능을 극대화하기 위해 외부 라이브러리나 프레임워크 없이 순수 바닐라(Vanilla) 기술로만 구축</li>
+                      <li>브라우저의 LocalStorage API를 활용한 견고하고 영구적인 상태 관리(State Management) 시스템 구현</li>
+                    </ul>
+                  </div>
+
+                  <div class="detail-section">
+                    <h4>🔥 Challenge & Solution</h4>
+                    <p><strong>Problem:</strong> Ensuring the app feels snappy and responsive without using a modern reactive framework like React.</p>
+                    <p><strong>Solution:</strong> Used pure DOM manipulation with event delegation to handle hundreds of checklist items without memory leaks or frame drops.</p>
                   </div>
                 </div>
               </div>
