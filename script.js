@@ -19,7 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const sectionHeight = section.clientHeight;
       if (window.scrollY >= sectionTop - window.innerHeight / 3 && 
           window.scrollY < sectionTop + sectionHeight - window.innerHeight / 3) {
+            
         currentMain = section.getAttribute('id');
+        if (currentMain === 'about') currentMain = 'home';
       }
     });
 

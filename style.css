@@ -125,7 +125,7 @@ h2 {
 
 .detail-header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(255,255,255,0.1);
   padding-bottom: 1.5rem;
@@ -362,7 +362,7 @@ p {
 }
 
 .mobile-nav .has-sub {
-  position: relative;
+  position: static;
 }
 
 .mobile-nav .nav-item {
@@ -780,18 +780,17 @@ section {
 }
 
 .project-gallery {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .project-gallery img {
   width: 100%;
+  height: auto;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease;
-  object-fit: cover;
-  aspect-ratio: 16 / 9;
 }
 
 .project-gallery img:hover {
