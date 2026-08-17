@@ -25,10 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Fallback if at the very bottom of the page
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
-      currentMain = 'contact';
-    }
+
 
     // Check sub-items within the active section
     const currentSection = document.getElementById(currentMain);
@@ -149,23 +146,56 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target.closest('.btn') || e.target.tagName === 'A') return;
 
       const isAlreadyExpanded = card.classList.contains('expanded');
+      let shiftOffset = 0;
 
       // Collapse all other cards first (accordion behavior)
       projectCards.forEach(otherCard => {
-        otherCard.classList.remove('expanded');
+        if (otherCard !== card && otherCard.classList.contains('expanded')) {
+          // If the expanded card is ABOVE the clicked card, we must account for the layout shift
+          if (otherCard.compareDocumentPosition(card) & Node.DOCUMENT_POSITION_FOLLOWING) {
+            const otherWrapper = otherCard.querySelector('.project-detail-wrapper');
+            if (otherWrapper) {
+              shiftOffset += otherWrapper.getBoundingClientRect().height;
+            }
+          }
+          otherCard.classList.remove('expanded');
+        }
       });
 
       if (!isAlreadyExpanded) {
         // Expand the card
         card.classList.add('expanded');
+        
+        // Calculate the absolute Y position of the card's top edge
+        const currentCardTopY = card.getBoundingClientRect().top + window.scrollY;
+        
+        // Predict where the card will end up after the above card collapses
+        const predictedCardTopY = currentCardTopY - shiftOffset;
+        
+        // Center the 'main info' part (which is roughly the top 400px)
+        const targetY = predictedCardTopY - (window.innerHeight / 2) + 200;
+        
+        if (shiftOffset > 0) {
+          // "즉각적인 반응" - If there is a layout shift (card is below), instantly snap the scroll.
+          // This eliminates the wobble/bounce. The card will seamlessly slide up into the center 
+          // as the card above it collapses.
+          window.scrollTo({ top: targetY, behavior: 'auto' });
+        } else {
+          // If no layout shift (card is above), smooth scroll is perfectly fine.
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+        }
+        
+      } else {
+        // Close the card
+        card.classList.remove('expanded');
+        
+        // When closing the card, smooth scroll to center
+        const cardTopY = card.getBoundingClientRect().top + window.scrollY;
+        const targetY = cardTopY - (window.innerHeight / 2) + 200;
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
       }
     });
   });
 
-  // Close sub-nav when clicking anywhere outside the menus
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.desktop-nav') && !e.target.closest('.mobile-nav') && !e.target.closest('.project-card')) {
-      hasSubLis.forEach(li => li.classList.remove('open'));
-    }
-  });
+
 });
