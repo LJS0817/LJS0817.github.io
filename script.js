@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(section => {
       const sectionTop = section.offsetTop;
       const sectionHeight = section.clientHeight;
-      if (window.scrollY >= sectionTop - window.innerHeight / 3 && 
-          window.scrollY < sectionTop + sectionHeight - window.innerHeight / 3) {
-            
+      if (window.scrollY >= sectionTop - window.innerHeight / 3 &&
+        window.scrollY < sectionTop + sectionHeight - window.innerHeight / 3) {
+
         currentMain = section.getAttribute('id');
         if (currentMain === 'about') currentMain = 'home';
       }
@@ -33,8 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
       let minDistance = Infinity;
       const projectCards = currentSection.querySelectorAll('.project-card');
       projectCards.forEach(card => {
-        const cardMiddle = card.offsetTop + (card.clientHeight / 2);
-        const distance = Math.abs(screenMiddle - cardMiddle);
+        if (card.style.visibility === 'hidden' || card.style.opacity === '0') return;
+        const rect = card.getBoundingClientRect();
+        const cardMiddle = rect.top + (rect.height / 2);
+        const viewportMiddle = window.innerHeight / 2;
+        const distance = Math.abs(viewportMiddle - cardMiddle);
         if (distance < minDistance) {
           minDistance = distance;
           currentSub = card.getAttribute('id');
@@ -73,25 +76,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Handle all nav links to prevent sub-nav flashing and provide perfect centering
-  const allLinks = document.querySelectorAll('.desktop-nav a, .mobile-nav a');
+  // Handle all nav links to provide perfect scrolling to sticky project cards and regular sections
+  const allLinks = document.querySelectorAll('a[href^="#"]');
   allLinks.forEach(link => {
     link.addEventListener('click', (e) => {
-      e.preventDefault();
-      // ... existing nav link logic remains exactly the same ...
       const targetId = link.getAttribute('href');
-      
+      if (!targetId || targetId === '#') return;
+      e.preventDefault();
+
       // We are starting a programmatic smooth scroll
       isAutoScrolling = true;
       if (autoScrollTimeout) clearTimeout(autoScrollTimeout);
-      
+
       // Determine which main section this click belongs to
       let targetMainId = targetId;
       if (link.classList.contains('sub-nav-item')) {
-         const closestSub = link.closest('.has-sub');
-         if(closestSub) {
-           targetMainId = closestSub.querySelector('.nav-item').getAttribute('href');
-         }
+        const closestSub = link.closest('.has-sub');
+        if (closestSub) {
+          targetMainId = closestSub.querySelector('.nav-item').getAttribute('href');
+        }
       }
 
       // Immediately handle SubIndex visibility
@@ -114,10 +117,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // Smooth scroll to target, centering it in the viewport
+      // Smooth scroll to target: calculate exact scroll position for sticky card wrapper
       const scrollTargetElement = document.querySelector(scrollTargetId);
       if (scrollTargetElement) {
-        scrollTargetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const wrapper = scrollTargetElement.closest('.card-scroll-wrapper');
+        let targetScrollY;
+        if (wrapper) {
+          // For project cards: scroll precisely so wrapper top is at STICKY_TOP
+          targetScrollY = window.pageYOffset + wrapper.getBoundingClientRect().top - STICKY_TOP;
+        } else {
+          // For regular sections (home, contact, etc.)
+          targetScrollY = window.pageYOffset + scrollTargetElement.getBoundingClientRect().top;
+        }
+
+        window.scrollTo({
+          top: Math.max(0, targetScrollY),
+          behavior: 'smooth'
+        });
+
         // Update history state to keep the URL hash consistent
         history.pushState(null, null, targetId);
       }
@@ -138,64 +155,142 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Expandable Project Cards Logic
-  const projectCards = document.querySelectorAll('.project-card');
-  projectCards.forEach(card => {
-    card.addEventListener('click', (e) => {
-      // Prevent triggering if clicking on buttons or links inside the card
-      if (e.target.closest('.btn') || e.target.tagName === 'A') return;
+  // Scroll Reveal Logic (Fade In / Out) for non-project elements
+  const revealTargets = document.querySelectorAll('.about-bio, .about-skills, .timeline-item');
 
-      const isAlreadyExpanded = card.classList.contains('expanded');
-      let shiftOffset = 0;
-
-      // Collapse all other cards first (accordion behavior)
-      projectCards.forEach(otherCard => {
-        if (otherCard !== card && otherCard.classList.contains('expanded')) {
-          // If the expanded card is ABOVE the clicked card, we must account for the layout shift
-          if (otherCard.compareDocumentPosition(card) & Node.DOCUMENT_POSITION_FOLLOWING) {
-            const otherWrapper = otherCard.querySelector('.project-detail-wrapper');
-            if (otherWrapper) {
-              shiftOffset += otherWrapper.getBoundingClientRect().height;
-            }
-          }
-          otherCard.classList.remove('expanded');
-        }
-      });
-
-      if (!isAlreadyExpanded) {
-        // Expand the card
-        card.classList.add('expanded');
-        
-        // Calculate the absolute Y position of the card's top edge
-        const currentCardTopY = card.getBoundingClientRect().top + window.scrollY;
-        
-        // Predict where the card will end up after the above card collapses
-        const predictedCardTopY = currentCardTopY - shiftOffset;
-        
-        // Center the 'main info' part (which is roughly the top 400px)
-        const targetY = predictedCardTopY - (window.innerHeight / 2) + 200;
-        
-        if (shiftOffset > 0) {
-          // "즉각적인 반응" - If there is a layout shift (card is below), instantly snap the scroll.
-          // This eliminates the wobble/bounce. The card will seamlessly slide up into the center 
-          // as the card above it collapses.
-          window.scrollTo({ top: targetY, behavior: 'auto' });
-        } else {
-          // If no layout shift (card is above), smooth scroll is perfectly fine.
-          window.scrollTo({ top: targetY, behavior: 'smooth' });
-        }
-        
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
       } else {
-        // Close the card
-        card.classList.remove('expanded');
-        
-        // When closing the card, smooth scroll to center
-        const cardTopY = card.getBoundingClientRect().top + window.scrollY;
-        const targetY = cardTopY - (window.innerHeight / 2) + 200;
-        window.scrollTo({ top: targetY, behavior: 'smooth' });
+        // Fade out when scrolling out of view
+        entry.target.classList.remove('visible');
       }
     });
+  }, {
+    threshold: 0,
+    rootMargin: '0px 0px -50px 0px'
   });
+
+  revealTargets.forEach(el => {
+    el.classList.add('reveal-element');
+    revealObserver.observe(el);
+  });
+
+  // Unified Sticky Scroll & Parallax Logic (Deterministic State Machine)
+  const STICKY_TOP = 120;
+  const OVERLAP_ZONE = Math.round(window.innerHeight * 0.7);
+  const PAUSE_ZONE = Math.round(window.innerHeight * 0.3);
+  
+  const projectsGrids = document.querySelectorAll('.projects-grid');
+  const allCardData = [];
+  
+  projectsGrids.forEach(grid => {
+    grid.style.gap = '0';
+    const cards = Array.from(grid.querySelectorAll('.project-card'));
+    
+    cards.forEach((card, index) => {
+      const isLast = (index === cards.length - 1);
+      const wrapper = document.createElement('div');
+      wrapper.className = 'card-scroll-wrapper';
+      wrapper.style.position = 'relative';
+      card.parentNode.insertBefore(wrapper, card);
+      wrapper.appendChild(card);
+      
+      allCardData.push({
+        card,
+        wrapper,
+        isLast
+      });
+    });
+  });
+  
+  function updateCardsOnScroll() {
+    allCardData.forEach(({ card, wrapper, isLast }) => {
+      const scrollH = card.scrollHeight;
+      const clientH = card.clientHeight;
+      const maxScroll = Math.max(0, scrollH - clientH);
+      
+      const extraHeight = isLast ? 0 : (PAUSE_ZONE + OVERLAP_ZONE);
+      const totalHeight = scrollH + extraHeight;
+      
+      if (wrapper.style.height !== `${totalHeight}px`) {
+        wrapper.style.height = `${totalHeight}px`;
+      }
+      const targetMarginBottom = isLast ? '0px' : `-${OVERLAP_ZONE}px`;
+      if (wrapper.style.marginBottom !== targetMarginBottom) {
+        wrapper.style.marginBottom = targetMarginBottom;
+      }
+      
+      const rect = wrapper.getBoundingClientRect();
+      
+      // Phase 1: User has not reached this card yet (Card is in the future)
+      if (rect.top > STICKY_TOP) {
+        card.scrollTop = 0;
+        card.style.opacity = '1';
+        card.style.visibility = 'visible';
+        card.style.transform = 'translateY(0) scale(1)';
+        return;
+      }
+      
+      // User is scrolling through or past this card
+      const scrolledPast = STICKY_TOP - rect.top;
+      
+      // Phase 2: Scrolling inner content (1:1 scroll sync)
+      card.scrollTop = Math.min(scrolledPast, maxScroll);
+      
+      if (isLast) {
+        // Last card in the grid: stays 100% visible, naturally scrolls away with section
+        card.style.opacity = '1';
+        card.style.visibility = 'visible';
+        card.style.transform = 'translateY(0) scale(1)';
+        return;
+      }
+      
+      // Phase 3: Content finished, in PAUSE_ZONE (lingering before next card appears)
+      const overlapStart = maxScroll + PAUSE_ZONE;
+      if (scrolledPast <= overlapStart) {
+        card.style.opacity = '1';
+        card.style.visibility = 'visible';
+        card.style.transform = 'translateY(0) scale(1)';
+        return;
+      }
+      
+      // Phase 4: In OVERLAP_ZONE (Next card is rising, this card is fading out)
+      const overlapOffset = scrolledPast - overlapStart;
+      const progress = Math.min(1, overlapOffset / OVERLAP_ZONE);
+      
+      if (progress < 1) {
+        card.style.visibility = 'visible';
+        const translateY = -(progress * 50);
+        const scale = 1 - (progress * 0.03);
+        const opacity = 1 - progress;
+        
+        card.style.transform = `translateY(${translateY}px) scale(${scale})`;
+        card.style.opacity = opacity.toFixed(3);
+      } else {
+        // Phase 5: Overlap complete -> GONE FOREVER (100% hidden, never reappears)
+        card.style.opacity = '0';
+        card.style.visibility = 'hidden';
+        card.style.transform = 'translateY(-50px) scale(0.97)';
+      }
+    });
+  }
+
+  window.addEventListener('resize', updateCardsOnScroll);
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateCardsOnScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  updateCardsOnScroll(); // Trigger once on load
 
 
 });
