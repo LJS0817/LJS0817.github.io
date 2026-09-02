@@ -12,12 +12,20 @@
      reports that sentinel has scrolled past the nav offset, the banner
      text is actually pinned, so we add .is-stuck to switch its
      background (CSS handles the actual look).
+   - Screenshot grid orientation: portrait screenshots need a different
+     layout (capped height, sit side by side) than landscape ones
+     (full width, one per row) -- see .shot-grid / .shot-portrait in
+     CSS. Rather than hand-tagging every future screenshot with a
+     class, this reads each image's actual pixel dimensions once
+     loaded and tags it automatically, so any screenshot added later
+     just needs the plain <img> in .shot-grid.
    ========================================================= */
 (function () {
   'use strict';
 
   document.addEventListener('DOMContentLoaded', function () {
     initStickyBanner();
+    initShotOrientation();
   });
 
   function initStickyBanner() {
@@ -41,6 +49,25 @@
       sentinel.className = 'banner-sticky-sentinel';
       text.parentNode.insertBefore(sentinel, text);
       observer.observe(sentinel);
+    });
+  }
+
+  function initShotOrientation() {
+    var imgs = Array.prototype.slice.call(document.querySelectorAll('.shot-grid img'));
+    if (!imgs.length) return;
+
+    function tag(img) {
+      if (img.naturalWidth && img.naturalHeight) {
+        img.classList.toggle('shot-portrait', img.naturalHeight > img.naturalWidth);
+      }
+    }
+
+    imgs.forEach(function (img) {
+      if (img.complete) {
+        tag(img);
+      } else {
+        img.addEventListener('load', function () { tag(img); });
+      }
     });
   }
 
