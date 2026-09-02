@@ -37,15 +37,10 @@
 }
 
 html {
-  /* NOTE: no `scroll-behavior: smooth` here on purpose. With
-     scroll-snap-type mandatory, a global smooth scroll-behavior forces
-     EVERY native wheel/trackpad/keyboard scroll tick to animate before
-     the next input is accepted, which reads as "scroll doesn't respond
-     immediately". Native snap already has its own quick, responsive
-     motion. JS-driven jumps (dot-nav clicks, nested-anchor clicks) keep
-     their own smoothness by passing `behavior: 'smooth'` directly to
-     scrollIntoView(), which is independent of this CSS property. */
-  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  /* Keeps anchor jumps (e.g. #capability) from landing under the fixed
+     top nav. */
+  scroll-padding-top: calc(var(--nav-h) + 16px);
 }
 
 body {
@@ -54,45 +49,6 @@ body {
   color: var(--ink);
   font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
-}
-
-/* Hide the native scrollbar everywhere scrolling happens — the outer
-   page and each slide's own internal overflow — in favor of the custom
-   progress bar + dot nav below. Scrolling itself (wheel/trackpad/
-   keyboard/touch) still works exactly as before; only the OS/browser's
-   scrollbar track is hidden. */
-html,
-.hero,
-.work,
-.project,
-.contact {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-html::-webkit-scrollbar,
-.hero::-webkit-scrollbar,
-.work::-webkit-scrollbar,
-.project::-webkit-scrollbar,
-.contact::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
-}
-
-/* Each top-level section is its own full-screen "slide": scrolling
-   moves cleanly from one to the next instead of blending content. A
-   slide taller than the viewport (a long project page) scrolls its
-   own content internally and only hands the scroll off to the next
-   slide once it reaches its end. */
-.hero,
-.work,
-.project,
-.contact {
-  height: 100vh;
-  height: 100dvh;
-  overflow-y: auto;
-  scroll-snap-align: start;
 }
 
 a {
@@ -157,67 +113,77 @@ img {
 }
 
 /* =========================================================
-   Custom scroll UI (replaces the native scrollbar)
+   Project index (right rail inside each project's body — NOT the
+   banner, which stays full-bleed. One static copy per project, with
+   that project's own row pre-marked .is-active, so no JS is needed to
+   track scroll position. Sticky within .project-body only, so it
+   naturally hands off between projects with the rest of the content.
    ========================================================= */
-
-/* Thin fill bar tracking overall progress through the slide deck,
-   sitting right under the fixed nav. */
-.scroll-progress {
-  position: fixed;
-  top: var(--nav-h);
-  left: 0;
-  right: 0;
-  height: 3px;
-  z-index: 999;
-  pointer-events: none;
-  background: rgba(23, 17, 13, 0.06);
-}
-
-.scroll-progress-fill {
-  height: 100%;
-  width: 0%;
-  background: var(--orange);
-  transition: width 0.15s ease-out;
-}
-
-/* Right-edge dot nav, one dot per slide. A white fill with a dark ring
-   keeps every dot readable whether it's sitting over a light section
-   (work, contact) or a dark one (hero, project banners). */
-.slide-nav {
-  position: fixed;
-  right: 22px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 998;
+.project-index {
+  position: sticky;
+  top: calc(var(--nav-h) + 190px);
+  flex-shrink: 0;
+  width: 148px;
+  margin-right: -32px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 9px;
+  gap: 2px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
 }
 
-.slide-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 0 1.5px rgba(23, 17, 13, 0.38);
-  flex-shrink: 0;
-  transition: height 0.25s ease, border-radius 0.25s ease, background 0.2s ease;
+.project-index-group {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--ink-40);
+  padding: 10px 8px 4px;
 }
 
-.slide-dot:hover {
-  box-shadow: 0 0 0 1.5px rgba(23, 17, 13, 0.65);
+.project-index-group:first-child {
+  padding-top: 2px;
 }
 
-.slide-dot.is-active {
-  height: 20px;
-  border-radius: 4px;
-  background: var(--orange);
-  box-shadow: 0 0 0 1.5px rgba(23, 17, 13, 0.38);
+.project-index-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  white-space: nowrap;
+  transition: background 0.15s ease;
 }
 
-@media (max-width: 720px) {
-  .slide-nav {
+.project-index-item:hover,
+.project-index-item.is-active {
+  background: rgba(234, 88, 12, 0.09);
+}
+
+.project-index-num {
+  font-size: 11px;
+  color: var(--ink-40);
+}
+
+.project-index-name {
+  font-size: 11px;
+  color: var(--ink-60);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-index-item.is-active .project-index-num,
+.project-index-item.is-active .project-index-name {
+  color: var(--orange-deep);
+  font-weight: 700;
+}
+
+@media (max-width: 1180px) {
+  .project-index {
     display: none;
   }
 }
@@ -228,16 +194,21 @@ img {
 .hero {
   background: var(--dark);
   color: var(--dark-ink);
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Content is anchored under the nav rather than vertically centered:
    the headline/stats stay a fixed distance from the top, and the
-   capability block below grows to soak up whatever room is left (its
-   own light background fills that space, so a taller viewport never
-   shows a bare dead zone under the hero). Content taller than the
-   slide simply grows past 100% and the slide scrolls through it. */
+   capability block below grows to soak up whatever room is left in
+   the hero's first viewport (its own light background fills that
+   space, so a taller viewport never shows a bare dead zone under the
+   hero). Content taller than one viewport simply grows past it and
+   the page scrolls through it like any other section. */
 .hero-content {
-  min-height: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   padding-top: calc(var(--nav-h) + 40px);
@@ -281,8 +252,18 @@ img {
 .hero-buttons {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 12px;
   margin-top: 22px;
+}
+
+.hero-email {
+  display: inline-flex;
+  align-items: center;
+  padding: 13px 4px;
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--dark-muted);
 }
 
 .btn {
@@ -347,10 +328,10 @@ img {
 }
 
 /* =========================================================
-   Capability (WHAT I BUILD) — nested inside the hero slide, but
+   Capability (WHAT I BUILD) — nested inside the hero section, but
    switches to the light palette right under the dark stats bar (its
    own section, same as the "All Work" section that follows it) and
-   grows to fill whatever room is left in the slide.
+   grows to fill whatever room is left in the hero's first viewport.
    ========================================================= */
 .capability-block {
   flex: 1;
@@ -447,8 +428,6 @@ img {
   padding: calc(var(--nav-h) + 40px) var(--pad-x) 40px;
   background: var(--bg-soft);
   border-bottom: 1px solid var(--line);
-  display: flex;
-  flex-direction: column;
 }
 
 .work-head {
@@ -479,53 +458,13 @@ img {
   margin: 8px 0 0;
 }
 
-.work-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
-
-.pill {
-  background: #fff;
-  border: 1px solid rgba(23, 17, 13, 0.15);
-  color: var(--ink-70);
-  padding: 8px 16px;
-  border-radius: 999px;
-  font-family: inherit;
-  font-size: 13px;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.pill:hover {
-  border-color: var(--orange);
-  color: var(--orange-deep);
-}
-
-.pill--active,
-.pill--active:hover {
-  background: var(--orange);
-  border-color: var(--orange);
-  color: #fff;
-  font-weight: 700;
-}
-
-/* Rows stretch (grid-auto-rows: 1fr) to consume whatever height is left
-   in the slide after the head, so fewer rows (e.g. a filtered category)
-   means taller cards rather than leftover blank space. Card images grow
-   into that space via flex; the text body keeps its natural height. */
+/* auto-fit + minmax: settles at however many equal columns fit at this
+   minimum width, so when a filter leaves a whole column empty (e.g. a
+   1-project category) the remaining card(s) stretch to fill the
+   freed-up width too, not just sit alone. */
 .work-grid {
-  flex: 1;
-  min-height: 0;
-  min-width: 0;
   display: grid;
-  /* auto-fit + minmax: normally settles at 4 equal columns, but when a
-     filter leaves a whole column empty (e.g. a 1-project category) that
-     column collapses and the remaining card(s) stretch to fill the
-     freed-up width too, not just the row height. */
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  grid-auto-rows: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 16px;
   max-width: 1400px;
   width: 100%;
@@ -535,7 +474,6 @@ img {
 .work-card {
   display: flex;
   flex-direction: column;
-  height: 100%;
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
@@ -553,8 +491,7 @@ img {
 
 .work-card img {
   width: 100%;
-  flex: 1;
-  min-height: 0;
+  height: 190px;
   object-fit: cover;
 }
 
@@ -583,24 +520,35 @@ img {
   line-height: 1.6;
 }
 
-.work-card.is-hidden {
-  display: none;
+.work-group-label {
+  grid-column: 1 / -1;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--ink-40);
+  padding-bottom: 8px;
+  margin-top: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.work-group-label:first-child {
+  margin-top: 0;
 }
 
 /* =========================================================
    Project detail
    ========================================================= */
-.project {
-  border-bottom: 1px solid var(--line);
-}
+/* No border between projects: a hairline here would sit exactly where
+   the previous project's sticky banner text un-sticks and the next
+   project's banner begins, showing up as a thin visible gap for a
+   frame or two. The dark banner following a light project body is
+   already a clean seam on its own. */
 
 .project-banner {
   position: relative;
   background: var(--dark);
-  min-height: 460px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  min-height: 280px;
   overflow: hidden;
 }
 
@@ -619,23 +567,58 @@ img {
   background: linear-gradient(180deg, rgba(23, 17, 13, 0.1) 0%, rgba(23, 17, 13, 0.55) 55%, var(--dark) 100%);
 }
 
+/* Sticks to the top (under the fixed nav) once scrolled there, and
+   stays pinned while the rest of that project's content scrolls past
+   underneath — handing off to the next project's own banner text as
+   soon as this project's section ends. The repo link rides along on
+   the right so it stays reachable the whole time too. */
+.banner-sticky-sentinel {
+  height: 0;
+}
+
 .project-banner-text {
-  position: relative;
-  padding: 0 var(--pad-x) 44px;
-  max-width: 1400px;
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 40;
+  background: linear-gradient(180deg, rgba(23, 17, 13, 1) 0%, rgba(23, 17, 13, 0.6) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--dark-line);
+  padding: 22px var(--pad-x);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
 }
 
-.project-crumb {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 11.5px;
-  letter-spacing: 1px;
-  color: var(--dark-muted);
-  margin-bottom: 18px;
+/* The translucent gradient + blur above is always "on", but an opaque
+   cover layer sits on top of it (behind the text) and hides it until
+   actually stuck. It's the COVER that fades — via opacity, from 1 to
+   0 — rather than trying to fade the translucent look itself in: a
+   layer that starts fully opaque and only reveals what's already
+   underneath as it fades out always animates smoothly, whereas
+   transitioning between two different `background` values (solid vs.
+   gradient, or gradient vs. gradient) doesn't reliably tween in
+   browsers and just snaps. Toggled via JS (IntersectionObserver
+   watching a zero-height sentinel placed right before this element)
+   once this banner text is actually pinned under the top nav. */
+.project-banner-text::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--dark);
+  opacity: 1;
+  transition: opacity 0.25s ease;
 }
 
-.project-crumb:hover {
-  color: var(--orange-bright);
+.project-banner-text.is-stuck::before {
+  opacity: 0;
+}
+
+.project-banner-info {
+  min-width: 0;
 }
 
 .project-banner-text h2 {
@@ -658,6 +641,20 @@ img {
   max-width: 1400px;
   margin: 0 auto;
   padding: 40px var(--pad-x) 56px;
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.project-body-main {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 1180px) {
+  .project-body {
+    display: block;
+  }
 }
 
 .meta-row {
@@ -670,14 +667,14 @@ img {
 
 .meta-label {
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 12px;
   letter-spacing: 1.6px;
   color: var(--ink-40);
   margin-bottom: 6px;
 }
 
 .meta-value {
-  font-size: 14px;
+  font-size: 15.5px;
   color: var(--ink-70);
   line-height: 1.6;
 }
@@ -700,18 +697,20 @@ img {
 }
 
 .repo-btn {
-  margin-left: auto;
-  background: var(--ink);
-  color: #fff;
+  flex-shrink: 0;
+  background: rgba(245, 239, 233, 0.08);
+  color: var(--dark-ink);
+  border: 1px solid rgba(245, 239, 233, 0.22);
   padding: 9px 18px;
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .repo-btn:hover {
-  background: var(--orange-deep);
+  background: rgba(245, 239, 233, 0.14);
+  border-color: var(--orange-bright);
   color: #fff;
 }
 
@@ -734,6 +733,8 @@ img {
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 18px;
+  display: flex;
+  flex-direction: column;
 }
 
 .tech-card-title {
@@ -750,6 +751,21 @@ img {
   margin: 0;
 }
 
+.tech-card-img {
+  display: block;
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  margin-top: auto;
+}
+
+.tech-card p {
+  margin-bottom: 12px;
+}
+
 .point-list {
   margin: 0;
   padding-left: 20px;
@@ -762,24 +778,153 @@ img {
   margin-bottom: 4px;
 }
 
-.retro-box {
-  background: rgba(234, 88, 12, 0.06);
-  border-left: 4px solid var(--orange);
+.point-list code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  background: var(--bg);
+  border: 1px solid var(--line);
   border-radius: 4px;
-  padding: 18px 20px;
+  padding: 1px 5px;
+  color: var(--orange-deep);
 }
 
-.retro-box p {
-  font-size: 14px;
-  line-height: 1.85;
-  color: var(--ink-70);
-  margin: 0;
+/* Small architecture diagram: a "rope" (snake / boustrophedon) layout.
+   Steps fill a fixed number of columns left-to-right, then wrap to the
+   next row and continue right-to-left, then left-to-right again, and
+   so on -- like a folded rope. Column count is fixed (3) so the whole
+   thing scales down with the available width instead of forcing a
+   horizontal scrollbar; step count doesn't need to be a multiple of 3,
+   an incomplete last row just continues from directly under the row
+   above. Each step's row/column is set explicitly (grid auto-placement
+   can't be trusted to backfill a reversed row on its own) -- the
+   nth-child rules below are enumerated up to 24 steps (8 rows), far
+   more than any project needs; add more in the same pattern if one
+   ever does. */
+.system-flow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 44px 28px;
+  margin: 4px 0 8px;
+  padding: 26px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.flow-step {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.flow-step:nth-child(1) { grid-row: 1; grid-column: 1; }
+.flow-step:nth-child(2) { grid-row: 1; grid-column: 2; }
+.flow-step:nth-child(3) { grid-row: 1; grid-column: 3; }
+.flow-step:nth-child(4) { grid-row: 2; grid-column: 3; }
+.flow-step:nth-child(5) { grid-row: 2; grid-column: 2; }
+.flow-step:nth-child(6) { grid-row: 2; grid-column: 1; }
+.flow-step:nth-child(7) { grid-row: 3; grid-column: 1; }
+.flow-step:nth-child(8) { grid-row: 3; grid-column: 2; }
+.flow-step:nth-child(9) { grid-row: 3; grid-column: 3; }
+.flow-step:nth-child(10) { grid-row: 4; grid-column: 3; }
+.flow-step:nth-child(11) { grid-row: 4; grid-column: 2; }
+.flow-step:nth-child(12) { grid-row: 4; grid-column: 1; }
+.flow-step:nth-child(13) { grid-row: 5; grid-column: 1; }
+.flow-step:nth-child(14) { grid-row: 5; grid-column: 2; }
+.flow-step:nth-child(15) { grid-row: 5; grid-column: 3; }
+.flow-step:nth-child(16) { grid-row: 6; grid-column: 3; }
+.flow-step:nth-child(17) { grid-row: 6; grid-column: 2; }
+.flow-step:nth-child(18) { grid-row: 6; grid-column: 1; }
+.flow-step:nth-child(19) { grid-row: 7; grid-column: 1; }
+.flow-step:nth-child(20) { grid-row: 7; grid-column: 2; }
+.flow-step:nth-child(21) { grid-row: 7; grid-column: 3; }
+.flow-step:nth-child(22) { grid-row: 8; grid-column: 3; }
+.flow-step:nth-child(23) { grid-row: 8; grid-column: 2; }
+.flow-step:nth-child(24) { grid-row: 8; grid-column: 1; }
+
+.flow-step-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+
+.flow-step-detail {
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--ink-60);
+}
+
+.flow-step small {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--orange-deep);
+}
+
+/* Connector arrows: right along an L->R row, left along an R->L row,
+   down at the end of a row (steps directly above/below share a
+   column, so a straight down arrow is enough). */
+.flow-step::after {
+  position: absolute;
+  color: var(--orange);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.flow-step:nth-child(6n+1):not(:last-child)::after,
+.flow-step:nth-child(6n+2):not(:last-child)::after {
+  content: "\2192";
+  right: -22px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.flow-step:nth-child(6n+4):not(:last-child)::after,
+.flow-step:nth-child(6n+5):not(:last-child)::after {
+  content: "\2190";
+  left: -22px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.flow-step:nth-child(6n+3):not(:last-child)::after,
+.flow-step:nth-child(6n):not(:last-child)::after {
+  content: "\2193";
+  left: 50%;
+  bottom: -32px;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 720px) {
+  .system-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .flow-step {
+    grid-column: 1 !important;
+  }
+
+  .flow-step:not(:last-child)::after {
+    content: "\2193" !important;
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: -24px !important;
+    transform: translateX(-50%) !important;
+  }
 }
 
 .ai-scope {
   margin-top: 20px;
-  background: rgba(23, 17, 13, 0.04);
-  border-left: 4px solid var(--ink-40);
+  background: rgba(234, 88, 12, 0.07);
+  border-left: 4px solid var(--orange);
   border-radius: 4px;
   padding: 13px 16px;
   font-size: 13px;
@@ -788,19 +933,18 @@ img {
 }
 
 .ai-scope strong {
-  color: var(--ink);
+  color: var(--orange-deep);
 }
 
 .shot-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 14px;
 }
 
 .shot-grid img {
   width: 100%;
-  height: 210px;
-  object-fit: cover;
+  height: auto;
   border-radius: 8px;
 }
 
@@ -808,11 +952,11 @@ img {
    Contact
    ========================================================= */
 .contact {
-  padding: calc(var(--nav-h) + 40px) var(--pad-x) 40px;
+  padding: calc(var(--nav-h) + 40px) var(--pad-x) 60px;
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 }
 
 .contact-eyebrow {
@@ -862,26 +1006,8 @@ img {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Below the point where "3-4 rows filling the screen" is realistic,
-     stop force-stretching rows to fit: let the grid take its natural
-     height and let .work's own overflow-y: auto scroll through it
-     (same pattern already used for tall project slides). */
-  .work {
-    display: block;
-  }
-
-  .work-grid {
-    grid-auto-rows: auto;
-  }
-
-  .work-card {
-    display: block;
-    height: auto;
-  }
-
   .work-card img {
     height: 150px;
-    flex: none;
   }
 
   .hero h1 {
@@ -933,7 +1059,7 @@ img {
   }
 
   .project-banner {
-    min-height: 320px;
+    min-height: 200px;
   }
 
   .project-banner-text h2 {
@@ -949,15 +1075,17 @@ img {
     gap: 8px;
   }
 
+  .project-banner-text {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .repo-btn {
-    margin-left: 0;
-    margin-top: 8px;
     width: 100%;
     text-align: center;
   }
 
-  .tech-grid,
-  .shot-grid {
+  .tech-grid {
     grid-template-columns: 1fr;
   }
 }
