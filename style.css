@@ -38,9 +38,12 @@
 
 html {
   scroll-behavior: smooth;
-  /* Keeps anchor jumps (e.g. #capability) from landing under the fixed
-     top nav. */
-  scroll-padding-top: calc(var(--nav-h) + 16px);
+  /* Keeps anchor jumps (e.g. #capability, right-rail project index)
+     from landing under the fixed top nav. Flush with the nav height
+     (no extra gap) so project sections -- which have no border
+     between them -- don't let the previous project peek through
+     above the sticky banner text when jumped to. */
+  scroll-padding-top: var(--nav-h);
 }
 
 body {
@@ -943,8 +946,16 @@ img {
 }
 
 .shot-grid img {
-  width: 100%;
+  display: block;
+  width: auto;
   height: auto;
+  max-width: 100%;
+  /* Landscape screenshots still fill the column at their natural size;
+     portrait (phone) screenshots would otherwise stretch to the full
+     column width and end up absurdly tall, so cap the height instead
+     and let width shrink to match, centered in the column. */
+  max-height: 640px;
+  margin: 0 auto;
   border-radius: 8px;
 }
 
