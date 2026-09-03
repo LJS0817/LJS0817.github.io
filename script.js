@@ -19,6 +19,14 @@
      class, this reads each image's actual pixel dimensions once
      loaded and tags it automatically, so any screenshot added later
      just needs the plain <img> in .shot-grid.
+   - 핵심 구현 media orientation: same idea as the screenshot grid, but
+     for .tech-card-img (img or video). A portrait clip left at the
+     fixed 280px card height would render as a narrow sliver with the
+     rest of the box empty, so a portrait .tech-card switches to a
+     side-by-side layout (text | media) instead of stacked -- see
+     .tech-card.is-portrait in CSS. Detected from the media's real
+     pixel/video dimensions once known, so any future tech-card-img
+     just needs the plain <img>/<video> and this tags it automatically.
    ========================================================= */
 (function () {
   'use strict';
@@ -26,6 +34,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     initStickyBanner();
     initShotOrientation();
+    initTechCardOrientation();
   });
 
   function initStickyBanner() {
@@ -67,6 +76,34 @@
         tag(img);
       } else {
         img.addEventListener('load', function () { tag(img); });
+      }
+    });
+  }
+
+  function initTechCardOrientation() {
+    var media = Array.prototype.slice.call(document.querySelectorAll('.tech-card-img'));
+    if (!media.length) return;
+
+    function tag(el) {
+      var isVideo = el.tagName === 'VIDEO';
+      var w = isVideo ? el.videoWidth : el.naturalWidth;
+      var h = isVideo ? el.videoHeight : el.naturalHeight;
+      if (!w || !h) return;
+      var card = el.closest('.tech-card');
+      if (card && !card.classList.contains('no-portrait')) card.classList.toggle('is-portrait', h > w);
+    }
+
+    media.forEach(function (el) {
+      if (el.tagName === 'VIDEO') {
+        if (el.readyState >= 1) {
+          tag(el);
+        } else {
+          el.addEventListener('loadedmetadata', function () { tag(el); });
+        }
+      } else if (el.complete) {
+        tag(el);
+      } else {
+        el.addEventListener('load', function () { tag(el); });
       }
     });
   }
