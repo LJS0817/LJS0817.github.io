@@ -217,95 +217,14 @@ img {
   padding-top: calc(var(--nav-h) + 40px);
 }
 
-/* Two columns on a wide screen: the copy keeps its old 900px measure on
-   the left, and the hero visual takes the space to its right that used
-   to sit empty. With the visual hidden (narrow screens) the single
-   remaining child lands exactly where the old column layout put it --
-   left-aligned, vertically centred -- so no layout swap is needed. */
 .hero-inner {
   flex: 1;
-  padding: 0 var(--pad-x) 28px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 56px;
-}
-
-.hero-text {
   max-width: 900px;
+  padding: 0 var(--pad-x) 28px;
+  align-items: start;
+  justify-content: center;
   display: flex;
   flex-direction: column;
-  align-items: start;
-}
-
-.hero-visual {
-  flex: 0 0 auto;
-  width: clamp(300px, 30vw, 430px);
-}
-
-.hero-visual {
-  position: relative;
-}
-
-.hero-visual svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
-}
-
-/* The 3D canvas is stacked over the SVG rather than replacing it in the
-   DOM, so the fallback is still there if WebGL is lost after init. */
-.hero-pad-3d {
-  position: absolute;
-  inset: 0;
-}
-
-.hero-pad-3d canvas {
-  display: block;
-  width: 100% !important;
-  height: auto !important;
-}
-
-/* The controller hovers over its grid; the pad and the light rays share
-   one rhythm so the beams read as cast by the object rather than
-   animating on their own. */
-.hv-pad {
-  animation: hv-float 6s ease-in-out infinite;
-  transform-origin: 200px 220px;
-}
-
-.hv-rays {
-  animation: hv-rays 6s ease-in-out infinite;
-}
-
-.hv-glow {
-  animation: hv-pulse 6s ease-in-out infinite;
-  transform-origin: 200px 336px;
-}
-
-@keyframes hv-float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-14px); }
-}
-
-@keyframes hv-rays {
-  0%, 100% { opacity: 0.85; }
-  50%      { opacity: 0.45; }
-}
-
-@keyframes hv-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.78; transform: scale(0.95); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hv-pad,
-  .hv-rays,
-  .hv-glow {
-    animation: none;
-  }
 }
 
 .hero-eyebrow {
@@ -1145,12 +1064,6 @@ img {
 /* =========================================================
    Responsive
    ========================================================= */
-@media (max-width: 1240px) {
-  .hero-visual {
-    display: none;
-  }
-}
-
 @media (max-width: 1180px) {
   :root {
     --pad-x: 40px;
