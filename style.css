@@ -699,11 +699,15 @@ img {
   border: 1px solid rgba(234, 88, 12, 0.2);
 }
 
+/* Same treatment as .btn--primary in the hero -- both are the "go to the
+   source" call to action sitting on a dark ground, so they read as one
+   control rather than two. The border matches the fill so swapping from
+   the old outlined style doesn't shift the box by a pixel. */
 .repo-btn {
   flex-shrink: 0;
-  background: rgba(245, 239, 233, 0.08);
-  color: var(--dark-ink);
-  border: 1px solid rgba(245, 239, 233, 0.22);
+  background: var(--orange);
+  color: #fff;
+  border: 1px solid var(--orange);
   padding: 9px 18px;
   border-radius: 8px;
   font-size: 13px;
@@ -712,8 +716,8 @@ img {
 }
 
 .repo-btn:hover {
-  background: rgba(245, 239, 233, 0.14);
-  border-color: var(--orange-bright);
+  background: var(--orange-deep);
+  border-color: var(--orange-deep);
   color: #fff;
 }
 
@@ -984,7 +988,8 @@ img {
    (each on its own row) -- capping by height instead would leave them
    at mismatched widths side by side, which reads as messier than just
    stacking them. */
-.shot-grid img {
+.shot-grid img,
+.shot-grid video {
   display: block;
   /* flex: 0 0 100% (not just width: 100%) so it can't shrink below a
      full row under the flex-wrap algorithm -- every landscape
@@ -999,7 +1004,8 @@ img {
    instead of stretched to the column width (which would make them
    absurdly tall), so they shrink to a normal size and, thanks to
    flex-wrap above, sit side by side with each other. */
-.shot-grid img.shot-portrait {
+.shot-grid img.shot-portrait,
+.shot-grid video.shot-portrait {
   /* Overrides the flex: 0 0 100% above -- without this it would still
      be forced to a full-width row like the landscape default. */
   flex: 0 1 auto;
