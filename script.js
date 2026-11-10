@@ -19,13 +19,15 @@
      class, this reads each image's actual pixel dimensions once
      loaded and tags it automatically, so any screenshot added later
      just needs the plain <img> (or <video>) in .shot-grid.
-   - Project video restart: every clip in a project detail is a short
+   - Project video restart & lazy loading: every clip in a project detail is a short
      muted loop, so a visitor who scrolls into a section mid-loop lands
-     halfway through the clip and never sees how it starts. Each video
-     is watched with IntersectionObserver; entering the viewport rewinds
-     it to 0 and plays, leaving pauses it. Side benefit: clips that are
+     halfway through the clip and never sees how it starts. Clips use
+     lazy loading via data-src and preload="none" so they download 0 bytes
+     until approached. Each video is watched with IntersectionObserver;
+     entering the viewport attaches src (if needed), rewinds it to 0,
+     and plays; leaving pauses it. Side benefit: clips that are
      off-screen aren't left looping, which is ~20 videos' worth of
-     decode work saved on a long page.
+     decode work and 170MB+ of initial network download saved on a long page.
    - 핵심 구현 media orientation: same idea as the screenshot grid, but
      for .tech-card-img (img or video). A portrait clip left at the
      fixed 280px card height would render as a narrow sliver with the
@@ -127,7 +129,33 @@
 
   function initVideoRestart() {
     var videos = Array.prototype.slice.call(document.querySelectorAll('.project video'));
-    if (!videos.length || !('IntersectionObserver' in window)) return;
+    if (!videos.length) return;
+
+    function attachSource(v) {
+      if (!v.getAttribute('src') && v.dataset.src) {
+        // preload="none" blocks fetching even after src is assigned unless
+        // preload is upgraded BEFORE assigning src (which triggers load once).
+        v.preload = 'auto';
+        v.src = v.dataset.src;
+      }
+    }
+
+    function playVideo(v) {
+      // play() rejects when the browser's autoplay policy blocks it (Safari's
+      // per-site "Never Auto-Play", Low Power Mode) or when paused while
+      // still buffering (AbortError). Swallow the rejection so it does not
+      // surface as an unhandled promise rejection in the console.
+      var p = v.play();
+      if (p && typeof p.catch === 'function') p.catch(function () {});
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      videos.forEach(function (v) {
+        attachSource(v);
+        playVideo(v);
+      });
+      return;
+    }
 
     function rewindAndPlay(v) {
       try {
@@ -135,24 +163,19 @@
       } catch (e) {
         /* seeking before metadata is ready throws in some browsers -- harmless */
       }
-      // play() rejects when the browser's autoplay policy blocks it (Safari's
-      // per-site "Never Auto-Play", Low Power Mode). Nothing to do about it
-      // here, but the rejection must be swallowed or it surfaces as an
-      // unhandled promise rejection in the console.
-      var p = v.play();
-      if (p && typeof p.catch === 'function') p.catch(function () {});
+      playVideo(v);
     }
 
     function enter(v) {
-      // currentTime = 0 only sticks once the media has a timeline, so on a
-      // cold video wait for metadata before rewinding.
+      attachSource(v);
+      // currentTime = 0 only sticks once the media has a timeline. On a cold
+      // video (readyState === 0), calling play() immediately starts loading
+      // from frame 0 (including on mobile Safari where preload="auto" may
+      // otherwise be ignored).
       if (v.readyState >= 1) {
         rewindAndPlay(v);
       } else {
-        v.addEventListener('loadedmetadata', function once() {
-          v.removeEventListener('loadedmetadata', once);
-          rewindAndPlay(v);
-        });
+        playVideo(v);
       }
     }
 
@@ -169,7 +192,9 @@
             enter(v);
           } else {
             v.setAttribute('data-inview', '0');
-            v.pause();
+            if (v.getAttribute('src')) {
+              v.pause();
+            }
           }
         });
       },
