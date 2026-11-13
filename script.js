@@ -464,14 +464,15 @@
     }
 
     function getLockScrollY() {
-      if (!shell) return 0;
+      var targetEl = workSection || shell;
+      if (!targetEl) return 0;
       var navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 56;
-      var shellRect = shell.getBoundingClientRect();
-      var shellDocTop = (window.scrollY || window.pageYOffset || 0) + shellRect.top;
+      var targetRect = targetEl.getBoundingClientRect();
+      var targetDocTop = (window.scrollY || window.pageYOffset || 0) + targetRect.top;
       var availableH = Math.max(0, window.innerHeight - navH);
-      var targetShellTop = navH + Math.max(16, (availableH - shellRect.height) / 2);
+      var targetTop = navH + Math.max(16, (availableH - targetRect.height) / 2);
       var maxAllowedScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-      return Math.min(maxAllowedScroll, Math.max(0, Math.round(shellDocTop - targetShellTop)));
+      return Math.min(maxAllowedScroll, Math.max(0, Math.round(targetDocTop - targetTop)));
     }
 
     var wheelQueue = 0;
@@ -488,11 +489,11 @@
     }
 
     function ensureShellVisible() {
-      if (!shell) return;
+      if (!workSection && !shell) return;
       resetWheelQueue();
       var lockY = getLockScrollY();
       var winY = window.scrollY || window.pageYOffset || 0;
-      if (Math.abs(winY - lockY) > 20) {
+      if (Math.abs(winY - lockY) > 2) {
         window.scrollTo({ top: lockY, behavior: 'smooth' });
       }
     }
@@ -502,10 +503,20 @@
       resetWheelQueue();
       if (isWindowBoxMode()) {
         ensureShellVisible();
-        var topOffset = libraryMain.scrollTop + (target.getBoundingClientRect().top - libraryMain.getBoundingClientRect().top);
-        libraryMain.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
+        var topOffset;
+        if (target.offsetParent === libraryMain) {
+          topOffset = target.offsetTop;
+        } else {
+          topOffset = libraryMain.scrollTop + (target.getBoundingClientRect().top - libraryMain.getBoundingClientRect().top);
+        }
+        libraryMain.scrollTo({ top: Math.max(0, Math.round(topOffset)), behavior: 'smooth' });
       } else {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        var navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 56;
+        var mobBar = document.querySelector('.mobile-library-bar');
+        var mobBarH = (mobBar && mobBar.offsetHeight) ? mobBar.offsetHeight : 52;
+        var targetDocTop = (window.scrollY || window.pageYOffset || 0) + target.getBoundingClientRect().top;
+        var finalY = Math.max(0, Math.round(targetDocTop - navH - mobBarH));
+        window.scrollTo({ top: finalY, behavior: 'smooth' });
       }
     }
 
