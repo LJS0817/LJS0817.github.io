@@ -469,10 +469,15 @@
       var navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 56;
       var targetRect = targetEl.getBoundingClientRect();
       var targetDocTop = (window.scrollY || window.pageYOffset || 0) + targetRect.top;
+      var targetStyle = getComputedStyle(targetEl);
+      var padTop = parseFloat(targetStyle.paddingTop) || 0;
+      var padBottom = parseFloat(targetStyle.paddingBottom) || 0;
+      var contentH = Math.max(0, targetRect.height - padTop - padBottom);
+      var contentDocTop = targetDocTop + padTop;
       var availableH = Math.max(0, window.innerHeight - navH);
-      var targetTop = navH + Math.max(16, (availableH - targetRect.height) / 2);
+      var targetTop = navH + Math.max(16, (availableH - contentH) / 2);
       var maxAllowedScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-      return Math.min(maxAllowedScroll, Math.max(0, Math.round(targetDocTop - targetTop)));
+      return Math.min(maxAllowedScroll, Math.max(0, Math.round(contentDocTop - targetTop)));
     }
 
     var wheelQueue = 0;

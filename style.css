@@ -532,7 +532,7 @@ html::-webkit-scrollbar-thumb:active {
    Steam Library App Window Showcase (#work)
    ========================================================= */
 .work-library {
-  padding: 16px var(--pad-x) 48px;
+  padding: 24px var(--pad-x);
   background: var(--bg);
 }
 
